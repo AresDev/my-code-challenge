@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { User } from "../interfaces/user";
+import { Post } from "../interfaces/post";
 
-export interface UserResponse {
-  users: User[];
+export interface ApiResponse {
+  response: Post[];
 }
 
-const useApi = (initialUrl: string, initialData: UserResponse) => {
+const useApi = (initialUrl: string, initialData: ApiResponse) => {
   const [data, setData] = useState(initialData);
-  const [url, _] = useState(initialUrl);
+  const [url] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -20,7 +20,7 @@ const useApi = (initialUrl: string, initialData: UserResponse) => {
       try {
         const result = await axios(url);
 
-        setData({ users: result.data });
+        setData({ response: result.data.response });
       } catch (error) {
         setIsError(true);
       }

@@ -1,14 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+
 import Profile from "./components/Profile";
-import Users from "./components/Users";
+import Home from "./components/Home";
+import CreateForm from "./components/Posts/Create";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="users">
-          <Route index element={<Users />}></Route>
+        <Route path="posts">
+          <Route index element={<Home />}></Route>
+          <Route
+            path="create/:id"
+            element={<CreateForm action="create" />}
+          ></Route>
           <Route path=":id" element={<Profile />}></Route>
         </Route>
 
