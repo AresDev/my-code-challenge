@@ -1,34 +1,36 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
-import Profile from "./components/Profile";
-import Home from "./components/Home";
-import CreateForm from "./components/Posts/Create";
+import Profile from "./pages/Profile";
+import Home from "./pages/Home";
+import CreateForm from "./pages/Posts/Create";
+import React from "react";
+import AppRoutes from "./routes/Routes";
+
+export interface AppContext{
+  baseUrl?: string;
+}
+
+const BASE_URL:string = "https://us-central1-mbtcandidate.cloudfunctions.net";
+
+
+export const MyAppContext = React.createContext<AppContext>({});
+
+const initialContext: AppContext = {
+  baseUrl:BASE_URL
+}
 
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="posts">
-          <Route index element={<Home />}></Route>
-          <Route
-            path="create/:id"
-            element={<CreateForm action="create" />}
-          ></Route>
-          <Route path=":id" element={<Profile />}></Route>
-        </Route>
-
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>There's nothing here!</p>
-            </main>
-          }
-        />
-      </Routes>
-    </>
-  );
+  return(
+  <>
+  <MyAppContext.Provider value={ initialContext }>
+    <AppRoutes/>
+  </MyAppContext.Provider>
+  </>
+  )
 }
 
 export default App;
+
+
+      

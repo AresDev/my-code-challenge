@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { MyAppContext } from "../../App";
 import useApi from "../../shared/hooks/UseApi";
 import PostList from "../Posts/List";
 import "./index.css";
-const BASE_URL = "https://us-central1-mbtcandidate.cloudfunctions.net";
+import { } from "@mui/material";
 
 const Home = () => {
-  const url = `${BASE_URL}/posts/arestrepo`;
+  const appInfo = useContext(MyAppContext)
+  const url = `${appInfo.baseUrl}/posts/arestrepo`;
   const [{ data, isLoading }] = useApi(url, { response: [] });
   const id = uuidv4();
 
@@ -18,7 +21,7 @@ const Home = () => {
     <>
       <h1>My Posts</h1>
 
-      <PostList response={data.response}></PostList>
+      <PostList posts={data.response}></PostList>
       <Link to={`/posts/create/${id}`}>{"( CREATE NEW POST )"}</Link>
     </>
   );
