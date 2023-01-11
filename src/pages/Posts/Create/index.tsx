@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import useLocalStorage from '../../../shared/hooks/useLocalStorage';
+
 
 import {} from "react-router-dom";
 import { createPost } from "../../../shared/api";
@@ -17,6 +19,8 @@ const CreateForm = ({ action }: FormProps) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
+  const [value, setValue] =  useLocalStorage('title', '')
+
   const url = `${BASE_URL}/posts/arestrepo`;
 
   if (action === "create") {
@@ -24,26 +28,27 @@ const CreateForm = ({ action }: FormProps) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (title && text) {
-      const newId = params.id;
-      if (newId) {
-        const result = await createPost(url, {
-          id: newId,
-          title: title,
-          text: text,
-          timestamp: new Date().toLocaleString(),
-        });
-        if (result) {
-          navigate("/posts");
-        }
-      }
-    }
+    setValue(title);
+    // if (title && text) {
+    //   const newId = params.id;
+    //   if (newId) {
+    //     const result = await createPost(url, {
+    //       id: newId,
+    //       title: title,
+    //       text: text,
+    //       timestamp: new Date().toLocaleString(),
+    //     });
+    //     if (result) {
+    //       navigate("/posts");
+    //     }
+    //   }
+    // }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="title">TITLE:</label>
+        <label htmlFor="title">TITLE: {value}</label>
         <input
           id="title"
           type="text"

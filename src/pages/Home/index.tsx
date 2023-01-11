@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { MyAppContext } from "../../App";
-import useApi from "../../shared/hooks/UseApi";
+import useApi from "../../shared/hooks/useApi";
 import PostList from "../Posts/List";
 import "./index.css";
 import { } from "@mui/material";
@@ -21,8 +21,8 @@ const Home = () => {
     <>
       <h1>My Posts</h1>
 
+      <Link to={`/posts/${id}/new`}>{"( CREATE NEW POST )"}</Link>
       <PostList posts={data.response}></PostList>
-      <Link to={`/posts/create/${id}`}>{"( CREATE NEW POST )"}</Link>
     </>
   );
 };
